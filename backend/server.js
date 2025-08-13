@@ -23,17 +23,21 @@ app.use(express.json());
 // Servir les fichiers statiques depuis le dossier public
 app.use(express.static('public'));
 
-// Connexion MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/medquiz', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// Connexion MongoDB (optionnelle pour le développement local)
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'Erreur de connexion MongoDB:'));
-db.once('open', () => {
-  console.log('✅ Connecté à MongoDB');
-});
+  const db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'Erreur de connexion MongoDB:'));
+  db.once('open', () => {
+    console.log('✅ Connecté à MongoDB');
+  });
+} else {
+  console.log('⚠️  MongoDB non configuré - Mode développement local');
+}
 
 // Modèles de données
 const userSchema = new mongoose.Schema({
@@ -94,6 +98,28 @@ app.get('/', (req, res) => {
 // Route pour récupérer les épreuves disponibles
 app.get('/api/exams', async (req, res) => {
   try {
+    if (!process.env.MONGODB_URI) {
+      // Mode développement local - données de test
+      return res.json([
+        {
+          _id: '1',
+          title: 'Quiz Cardiologie - Test',
+          specialty: 'cardiologie',
+          difficulty: 'moyen',
+          questionCount: 5,
+          timePerQuestion: 60
+        },
+        {
+          _id: '2',
+          title: 'Quiz Neurologie - Test',
+          specialty: 'neurologie',
+          difficulty: 'moyen',
+          questionCount: 5,
+          timePerQuestion: 60
+        }
+      ]);
+    }
+    
     const { specialty, difficulty } = req.query;
     let filter = { isActive: true };
     
