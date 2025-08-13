@@ -20,6 +20,9 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Servir les fichiers statiques depuis le dossier public
+app.use(express.static('public'));
+
 // Connexion MongoDB
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/medquiz', {
   useNewUrlParser: true,
@@ -85,7 +88,7 @@ const GameSession = mongoose.model('GameSession', gameSessionSchema);
 
 // Routes API
 app.get('/', (req, res) => {
-  res.json({ message: 'MedQuiz API - Serveur opérationnel' });
+  res.sendFile('index.html', { root: 'public' });
 });
 
 // Route pour récupérer les épreuves disponibles
