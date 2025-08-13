@@ -1,25 +1,26 @@
 {
   "name": "medquiz",
   "version": "1.0.0",
-  "description": "Quiz médical compétitif basé sur le programme R2C des EDN",
+  "description": "Application de quiz médical compétitif pour étudiants en médecine",
   "main": "backend/server.js",
   "scripts": {
     "start": "cd backend && npm start",
     "dev": "cd backend && npm run dev",
-    "install-all": "npm install && cd backend && npm install",
-    "init-db": "cd backend && npm run init-db",
-    "add-questions": "cd backend && npm run add-questions"
+    "build": "cd backend && npm install",
+    "vercel-build": "cd backend && npm install"
   },
   "engines": {
     "node": "18.x",
     "npm": "9.x"
   },
-  "keywords": ["quiz", "medical", "education", "medicine", "edn", "r2c", "healthcare"],
+  "keywords": ["quiz", "medical", "education", "medicine", "edn", "r2c"],
   "author": "MedQuiz Team",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/votre-username/medquiz.git"
-  },
-  "homepage": "https://medquiz-app.herokuapp.com"
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.1",
+    "socket.io": "^4.8.1"
+  }
 }

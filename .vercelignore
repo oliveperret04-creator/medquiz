@@ -1,0 +1,11 @@
+node_modules/
+.git/
+.env
+*.log
+start.bat
+Procfile
+railway.json
+README.md
+QUICK_START.md
+DEPLOYMENT.md
+LICENSE
